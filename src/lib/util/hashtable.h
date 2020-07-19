@@ -1,8 +1,27 @@
 #ifndef INCLUDED_HASHTABLE_H
 #define INCLUDED_HASHTABLE_H
 
-typedef struct hashtable Hashtable;
+#include "typed_pointer.h"
 
-Hashtable* hash_table_create(unsigned long table_size);
-bool hash_table_insert(Hashtable* table, const char *key, TypedPointer value);
+typedef struct __hashtable Hashtable;
+
+Hashtable* hashtable_create(unsigned long table_size);
+void hashtable_destroy(Hashtable *table, void (*dtor)(TypedPointer *));
+
+/**
+ * Insert into hashtable.
+ * @return previous value for that key, if any
+ */
+TypedPointer hashtable_put(Hashtable *table, const char *key, TypedPointer value);
+
+/**
+ * Get from hashtable. 
+ */
+TypedPointer hashtable_get(Hashtable *table, const char *key);
+
+/**
+ * Delete from hashtable.
+ */
+TypedPointer hashtable_delete(Hashtable *table, const char *key);
+
 #endif

@@ -24,6 +24,13 @@ struct __typed_pointer {
 	((desired_type) ptr->data) \
 })
 
+/* I think I won't always want to malloc them. For example in my hashtable impl */
+#define TYPED_POINTER_SET(ptr, value, desired_type) do { \
+	desired_type d = value; \
+	ptr->data = d; \
+	ptr->type = #desired_type \
+} while (0)
+
 #define TYPED_POINTER_CREATE(value, desired_type) ({ \
 	TypedPointer *s = malloc(sizeof(*s)); \
 	/* so compiler will error if this type is incompatible */ \
